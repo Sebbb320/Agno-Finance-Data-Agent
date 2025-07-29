@@ -27,15 +27,10 @@ else
 fi
 
 # 设置环境变量
-export STREAMLIT_SERVER_PORT=${PORT:-8501}
-export STREAMLIT_SERVER_ADDRESS=0.0.0.0
 export PYTHONPATH=/app
-export STREAMLIT_SERVER_HEADLESS=true
-export STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
 echo "📊 应用配置:"
-echo "  - 端口: $STREAMLIT_SERVER_PORT"
-echo "  - 地址: $STREAMLIT_SERVER_ADDRESS"
+echo "  - 端口: ${PORT:-8501}"
 echo "  - PYTHONPATH: $PYTHONPATH"
 
 # 检查应用文件
@@ -45,8 +40,12 @@ ls -la ui/Home.py
 
 # 启动Streamlit应用
 echo "🚀 启动Streamlit应用..."
+# 确保端口变量被正确设置
+PORT=${PORT:-8501}
+echo "Using port: $PORT"
+
 exec streamlit run ui/Home.py \
-    --server.port=$STREAMLIT_SERVER_PORT \
+    --server.port=$PORT \
     --server.address=0.0.0.0 \
     --server.headless=true \
     --browser.gatherUsageStats=false \
