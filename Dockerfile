@@ -6,7 +6,7 @@ WORKDIR /app
 RUN pip install streamlit psutil requests
 
 # 复制应用文件
-COPY diagnose_app.py .
+COPY . .
 COPY start_simple.sh .
 
 # 设置权限

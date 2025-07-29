@@ -12,7 +12,7 @@ echo "Using port: $PORT"
 
 # 启动应用，添加更多调试信息
 echo "Starting streamlit..."
-exec streamlit run diagnose_app.py \
+exec streamlit run ui/Home.py \
     --server.port=$PORT \
     --server.address=0.0.0.0 \
     --server.headless=true \
