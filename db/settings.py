@@ -40,7 +40,9 @@ class DbSettings(BaseSettings):
 
         # Validate database connection
         if "None" in db_url or db_url is None:
-            raise ValueError("Could not build database connection")
+            # 如果没有数据库配置，返回内存数据库URL或None
+            print("⚠️  警告: 没有配置数据库，将使用内存存储模式")
+            return None
         return db_url
 
 
