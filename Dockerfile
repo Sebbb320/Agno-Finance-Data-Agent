@@ -10,9 +10,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
-COPY requirements.txt .
+COPY requirements-railway.txt requirements.txt
 
 # 安装Python依赖
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制应用代码
@@ -26,5 +27,9 @@ ENV PYTHONPATH=/app
 ENV STREAMLIT_SERVER_PORT=8501
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
+# 复制启动脚本
+COPY start.sh .
+RUN chmod +x start.sh
+
 # 启动命令
-CMD ["streamlit", "run", "ui/Home.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["./start.sh"]
