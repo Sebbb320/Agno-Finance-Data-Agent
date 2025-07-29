@@ -14,7 +14,7 @@ COPY requirements-railway.txt requirements.txt
 
 # 安装Python依赖
 RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt || (echo "❌ 依赖安装失败" && exit 1)
 
 # 复制应用代码
 COPY . .
@@ -29,7 +29,8 @@ ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
 # 复制启动脚本
 COPY start.sh .
-RUN chmod +x start.sh
+COPY start_test.sh .
+RUN chmod +x start.sh start_test.sh
 
-# 启动命令
+# 启动命令（可以选择测试模式或正常模式）
 CMD ["./start.sh"]
